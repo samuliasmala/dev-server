@@ -9,7 +9,7 @@ git clone git@github.com:samuliasmala/dotfiles.git .dotfiles
 echo 'nnyyyyyyy' | .dotfiles/bootstrap.sh
 
 # Add misc packages
-sudo apt install -y tldr zip unzip
+sudo apt install -y tldr zip unzip build-essential
 
 # Set timezone to Helsinki
 echo "Europe/Helsinki" | sudo tee /etc/timezone
