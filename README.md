@@ -13,7 +13,7 @@ Installation instructions
 - Install _DejaVu Sans Mono_ font from `dejavu-sans-mono.zip`
 - Change the Ubuntu terminal font to _DejaVu Sans Mono_ from Properties
 - Put ssh keyfiles and configs to `~/.ssh`
-- Run `bootstrap-ubuntu.sh`
+- Run `bootstrap-wsl.sh`
 
 ### Vagrant + Virtualbox
 
