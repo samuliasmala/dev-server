@@ -15,3 +15,8 @@ sudo VBoxClient --draganddrop
 sudo VBoxClient --display
 sudo VBoxClient --checkhostversion
 sudo VBoxClient --seamless
+
+# Print instructions
+echo "To access GUI:
+Login with username: vagrant, password: vagrant via the login prompt on the virtualbox GUI. Then start xfce by running
+'startx'"

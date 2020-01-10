@@ -93,8 +93,4 @@ EOF
 sudo systemctl restart postgresql
 
 # Print instructions
-echo "Run '. .bashrc' to source .bashrc and enable nvm, node and npm. Alternatively start new shell session
-
-To access GUI:
-Login with username: vagrant, password: vagrant via the login prompt on the virtualbox GUI. Then start xfce by running
-'startx'"
+echo "Run '. .bashrc' to source .bashrc and enable nvm, node and npm. Alternatively start new shell session"
