@@ -76,12 +76,14 @@ heroku login
 # DATABASES
 # Install and configure database
 sudo apt install -y postgresql postgresql-contrib redis
+# Postgresql is not started after install in WSL
+sudo service postgresql start
 # Create Postgres database and user
-sudo -u postgres createuser -s vagrant
-sudo -u postgres psql -c "CREATE DATABASE testdb WITH ENCODING 'UTF8';"
-sudo -u postgres psql -c "ALTER USER vagrant WITH ENCRYPTED PASSWORD 'pass';"
+sudo -u postgres createuser -s $USER
+sudo -u postgres psql -c "CREATE DATABASE $USER WITH ENCODING 'UTF8';"
+sudo -u postgres psql -c "ALTER USER $USER WITH ENCRYPTED PASSWORD 'pswd';"
 # Enable passwordless access
-echo 'localhost:5432:*:vagrant:pass' > ~/.pgpass && chmod 0600 ~/.pgpass
+echo "localhost:5432:*:$USER:pswd" > ~/.pgpass && chmod 0600 ~/.pgpass
 # Configure postgres to allow connections from Vagrant host
 sudo sed -i "s/#listen_address.*/listen_addresses = '*'/" $(find /etc/postgresql -name postgresql.conf)
 sudo tee -a  $(find /etc/postgresql -name pg_hba.conf) <<EOF
