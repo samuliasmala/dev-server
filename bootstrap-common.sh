@@ -94,3 +94,9 @@ sudo systemctl restart postgresql
 
 # Print instructions
 echo "Run '. .bashrc' to source .bashrc and enable nvm, node and npm. Alternatively start new shell session"
+
+# APP SPECIFIC SETTINGS
+# Kuura
+sudo -u postgres createuser -s kuura
+sudo -u postgres psql -c "ALTER USER kuura WITH ENCRYPTED PASSWORD 'kuurataan_kunnolla';"
+echo "localhost:5432:*:kuura:kuurataan_kunnolla" >> ~/.pgpass
