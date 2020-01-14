@@ -41,6 +41,17 @@ curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
 echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 sudo apt update && sudo apt install --no-install-recommends yarn
 
+# Install Conda
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh
+bash ~/miniconda.sh -b -p $HOME/.miniconda3
+rm ~/miniconda.sh
+# The installer will not prompt you for anything, including setup of your shell to activate conda. To add this activation in your current shell session:
+eval "$($HOME/.miniconda3/bin/conda shell.bash hook)"
+# With this activated shell, you can then install conda’s shell functions for easier access in the future:
+conda init
+# If you’d prefer that conda’s base environment not be activated on startup, set the auto_activate_base parameter to false:
+conda config --set auto_activate_base false
+
 # Install Docker
 curl https://get.docker.com | bash
 sudo usermod -aG docker $USER
