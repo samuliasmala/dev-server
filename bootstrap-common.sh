@@ -23,6 +23,9 @@ echo "Europe/Helsinki" | sudo tee /etc/timezone
 sudo unlink /etc/localtime
 sudo ln -s /usr/share/zoneinfo/Europe/Helsinki /etc/localtime
 
+# Disable bash bell
+sudo sed -i 's/# set bell-style none/set bell-style none/' /etc/inputrc
+
 # Locale generation has to be done before postgresql installation, or it should be restarted:
 # service postgresql restart
 sudo locale-gen fi_FI.UTF-8 en_US.UTF-8
