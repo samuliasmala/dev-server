@@ -1,5 +1,13 @@
 #!/bin/bash
-# Script to create development environment in Ubuntu
+# Script to create development environment in WSL Ubuntu
+
+# Create wsl.conf file
+sudo tee /etc/wsl.conf <<EOF
+[automount]
+# https://github.com/microsoft/WSL/issues/4778
+# fmask cannot be 111 because then code and explorer.exe wouldn't work from WSL
+options = "metadata,umask=002,fmask=011"
+EOF
 
 # https://github.com/microsoft/WSL/issues/352
 # Note: Bash on Windows does not currently apply umask properly
