@@ -13,9 +13,9 @@ EOF
 # Note: Bash on Windows does not currently apply umask properly
 # Should be fixed in WSL2
 if [ "$(umask)" = "0000" ]; then
-    echo >> $HOME/.bashrc
-    echo "# Note: Bash on Windows does not currently apply umask properly" >> $HOME/.bashrc
-    echo 'if [ "$(umask)" = "0000" ]; then umask 002; fi' >> $HOME/.bashrc
+    echo >> $HOME/.bashrc_local
+    echo "# Note: Bash on Windows does not currently apply umask properly" >> $HOME/.bashrc_local
+    echo 'if [ "$(umask)" = "0000" ]; then umask 002; fi' >> $HOME/.bashrc_local
     umask 002
 fi
 
