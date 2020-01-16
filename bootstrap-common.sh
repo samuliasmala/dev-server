@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# Check that .ssh folder exists
+if [ ! -e $HOME/.ssh/id_rsa ]; then
+    echo "Restore .ssh folder (id_rsa, id_rsa.pub and config files)"
+    echo "To continue, $HOME/.ssh/id_rsa must exist"
+    exit 1
+fi
+
 # Upgrade system
 sudo apt update
 sudo apt upgrade -y
