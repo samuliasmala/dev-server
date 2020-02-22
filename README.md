@@ -11,6 +11,10 @@ Installation instructions
 
 ### WSL Ubuntu
 
+- Enable "Windows Subsystem for Linux" optional feature. Open PowerShell as Administrator and run:  
+`Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux`  
+Restart your computer when prompted.
+- Open the Microsoft Store and install Ubuntu distribution
 - Install _DejaVu Sans Mono_ font from `dejavu-sans-mono.zip` (downloaded from [Nerdfonts](https://nerdfonts.com/))
 - Change the Ubuntu terminal font to _DejaVu Sans Mono_ from _Properties_
 - Disable terminal window Scroll-Forward from _Properties -> Terminal_ tab (available since Windows 10 May 2019 Update)
