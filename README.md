@@ -18,6 +18,7 @@ Restart your computer when prompted.
 - Install _DejaVu Sans Mono_ font from `dejavu-sans-mono.zip` (downloaded from [Nerdfonts](https://nerdfonts.com/))
 - Change the Ubuntu terminal font to _DejaVu Sans Mono_ from _Properties_
 - Disable terminal window Scroll-Forward from _Properties -> Terminal_ tab (available since Windows 10 May 2019 Update)
+- Enable "Use Ctrl+Shift+C/V as Copy/Paste"
 - Put ssh keyfiles and configs to `~/.ssh`
 - Run `bootstrap-wsl.sh`
 
