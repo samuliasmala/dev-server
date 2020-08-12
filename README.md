@@ -43,12 +43,6 @@ Docker installation MAY need this: `wsl --set-default Ubuntu`
 - Run `bootstrap-wsl2.sh`
 - Install Docker [Docker Desktop WSL 2 backend](https://docs.docker.com/docker-for-windows/wsl/)
 - Add user to Docker group to avoid the use of sudo: `sudo usermod -aG docker $USER`
-- Install Docker Compose
-```
-sudo curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-```
-
 - Load VS Code settings: Install _Settings Sync (shan.code-settings-sync)_, login with Github account, select correct Gist and download settings.
 
 ### Vagrant + Virtualbox
