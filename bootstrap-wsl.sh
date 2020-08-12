@@ -21,6 +21,9 @@ fi
 
 bash bootstrap-common.sh
 
+# Restart Postgres to apply config changes
+sudo service postgresql restart
+
 # https://stackoverflow.com/questions/45437824/postgresql-warning-could-not-flush-dirty-data-function-not-implemented
 # This fixes "WARNING: could not flush dirty data: Function not implemented" when creating a database
 # Should be fixed in WSL2

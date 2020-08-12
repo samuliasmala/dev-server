@@ -3,6 +3,9 @@
 
 bash bootstrap-common.sh
 
+# Restart Postgres to apply config changes
+sudo systemctl restart postgresql
+
 # GUI
 # Install required packages for GUI,
 # instructions from https://stackoverflow.com/questions/18878117/using-vagrant-to-run-virtual-machines-with-desktop-environment

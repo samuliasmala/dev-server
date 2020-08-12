@@ -106,7 +106,6 @@ sudo tee -a  $(find /etc/postgresql -name pg_hba.conf) <<EOF
 # Accept all IPv4 connections from Vagrant host (10.0.2.2)
 host    all             all             10.0.2.2/32             md5
 EOF
-sudo systemctl restart postgresql
 
 # Print instructions
 echo "Run '. .bashrc' to source .bashrc and enable nvm, node and npm. Alternatively start new shell session"

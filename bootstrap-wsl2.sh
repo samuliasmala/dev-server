@@ -11,4 +11,7 @@ EOF
 
 bash bootstrap-common.sh
 
+# Restart Postgres to apply config changes
+sudo service postgresql restart
+
 echo "Start new shell session to apply umask correctly "
