@@ -7,6 +7,9 @@ if [ ! -e $HOME/.ssh/id_rsa ]; then
     exit 1
 fi
 
+# Move to home directory, required at least to install dotfiles
+cd
+
 # Upgrade system
 sudo apt update
 sudo apt upgrade -y
