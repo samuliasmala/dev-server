@@ -97,10 +97,13 @@ sudo curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-
 sudo chmod +x /usr/local/bin/docker-compose
 
 # DATABASES
-# Install and configure database
-sudo apt install -y postgresql postgresql-contrib redis
-# Postgresql is not started after install in WSL
+# Install databases
+sudo apt install -y postgresql postgresql-contrib redis mysql-server
+# Databases not started automatically after install in WSL
 sudo service postgresql start
+sudo service mysql start
+
+# Cofigure Postgresql
 # Create Postgres database and user
 sudo -u postgres createuser -s $USER
 sudo -u postgres psql -c "CREATE DATABASE $USER WITH ENCODING 'UTF8';"
@@ -114,6 +117,16 @@ sudo tee -a  $(find /etc/postgresql -name pg_hba.conf) <<EOF
 host    all             all             10.0.2.2/32             md5
 EOF
 
+# Configure MySQL
+sudo mysql -u root --execute="CREATE USER '$USER'@'localhost' IDENTIFIED BY 'pswd';"
+sudo mysql -u root --execute="CREATE DATABASE $USER;"
+sudo mysql -u root --execute="GRANT ALL PRIVILEGES ON * . * TO '$USER'@'localhost';"
+sudo mysql -u root --execute="FLUSH PRIVILEGES;"
+# Enable passwordless access
+echo "[client]
+user = $USER
+password = pswd" > ~/.my.cnf && chmod 0600 ~/.my.cnf
+
 # Print instructions
 echo "Run '. .bashrc' to source .bashrc and enable nvm, node and npm. Alternatively start new shell session"
 
@@ -122,3 +135,5 @@ echo "Run '. .bashrc' to source .bashrc and enable nvm, node and npm. Alternativ
 sudo -u postgres createuser -s kuura
 sudo -u postgres psql -c "ALTER USER kuura WITH ENCRYPTED PASSWORD 'kuurataan_kunnolla';"
 echo "localhost:5432:*:kuura:kuurataan_kunnolla" >> ~/.pgpass
+# VTI
+sudo mysql -u root --execute="CREATE DATABASE vti_backend;"
