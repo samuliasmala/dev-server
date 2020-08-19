@@ -14,4 +14,9 @@ bash bootstrap-common.sh
 # Restart Postgres to apply config changes
 sudo service postgresql restart
 
+# Disable 'Utmp slot not found' message when closing screen window
+echo "
+# Disable 'Utmp slot not found' message
+deflogin off" >> ~/.screenrc
+
 echo "Start new shell session to apply umask correctly "
