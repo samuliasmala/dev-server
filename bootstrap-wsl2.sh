@@ -14,6 +14,19 @@ bash bootstrap-common.sh
 # Restart Postgres to apply config changes
 sudo service postgresql restart
 
+# Start services when logging in if not started already
+echo "
+# Start services on login without requiring a password
+$USER ALL=(ALL:ALL) NOPASSWD: /usr/sbin/service
+" | sudo EDITOR='tee -a' visudo
+
+echo "
+# Start services if not already started
+sudo service postgresql status > /dev/null || sudo service postgresql start
+sudo service mysql status > /dev/null || sudo service mysql start
+sudo service redis-server status > /dev/null || sudo service redis-server start
+" >> ~/.bashrc_local
+
 # Disable 'Utmp slot not found' message when closing screen window
 echo "
 # Disable 'Utmp slot not found' message
