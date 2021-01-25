@@ -32,4 +32,19 @@ echo "
 # Disable 'Utmp slot not found' message
 deflogin off" >> ~/.screenrc
 
+# The X Server
+# Instructions from https://www.gregbrisebois.com/posts/chromedriver-in-wsl2/
+cat >> ~/.bashrc_local <<"EOF"
+# Add DISPLAY environment variable to tell GUI applications at which IP
+# address the X Server is that we want to use
+export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
+
+EOF
+
+echo "The X Server:"
+echo "Download and install VcXsrv in Windows. Once installed, run xlaunch.exe
+(from the VcXsrv folder in Program Files). You can leave most of the settings as
+default, but make sure to check “Disable access control”.
+"
+
 echo "Start new shell session to apply umask correctly "
