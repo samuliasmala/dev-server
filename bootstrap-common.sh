@@ -71,6 +71,11 @@ conda config --set channel_priority strict
 # Use Python3 as default Python
 sudo ln -s /usr/bin/python3 /usr/bin/python
 
+# Install Pypy (faster Python interpreter)
+sudo add-apt-repository -y ppa:pypy/ppa
+sudo apt install pypy3
+
+
 # Install Google Cloud SDK
 # Add the Cloud SDK distribution URI as a package source:
 echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
