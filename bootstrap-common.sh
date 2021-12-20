@@ -73,7 +73,7 @@ sudo ln -s /usr/bin/python3 /usr/bin/python
 
 # Install Pypy (faster Python interpreter)
 sudo add-apt-repository -y ppa:pypy/ppa
-sudo apt install pypy3
+sudo apt install -y pypy3
 
 
 # Install Google Cloud SDK

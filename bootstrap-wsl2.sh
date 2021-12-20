@@ -51,7 +51,7 @@ default, but make sure to check “Disable access control”.
 echo "Installing Chrome"
 sudo apt-get install -y curl unzip xvfb libxi6 libgconf-2-4
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-sudo apt install ./google-chrome-stable_current_amd64.deb
+sudo apt install -y ./google-chrome-stable_current_amd64.deb
 google-chrome --version
 
 echo "Start new shell session to apply umask correctly "
