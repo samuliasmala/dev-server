@@ -2,7 +2,7 @@
 
 Bootstrap scripts to quickly set up a new Ubuntu development server (real, WSL or Vagrant + Virtualbox)
 
-Installation instructions
+## Installation instructions
 
 ### Real Ubuntu
 
@@ -11,7 +11,24 @@ Installation instructions
 
 ### WSL2 Ubuntu
 
-- Open PowerShell as Administrator and run following four commands:
+
+**[New Windows versions](https://docs.microsoft.com/en-us/windows/wsl/install)**
+1. Open PowerShell as Administrator and run the following command:  
+  `wsl --install`  
+  Note: it may be necessary to run `wsl --install -d Ubuntu` instead (might have been necessary because I run first two steps of the old instructions before starting new instructions)
+
+1. Install Windows Terminal from Microsoft Store and set following settings:
+    - Startup -> Default profile -> Ubuntu
+    - Ubuntu -> Starting directory -> `\\wsl$\Ubuntu\home\asmala`
+
+1. Put ssh keyfiles and configs to `~/.ssh`
+1. Run `bootstrap-wsl2.sh`
+1. Install Docker [Docker Desktop WSL 2 backend](https://docs.docker.com/docker-for-windows/wsl/)
+1. Add user to Docker group to avoid the use of sudo: `sudo usermod -aG docker $USER`
+
+**[Old Windows versions](https://docs.microsoft.com/en-us/windows/wsl/install-manual)**
+
+- Open PowerShell as Administrator and run the following commands:
 
 1. Enable WSL   
 `dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart`  
