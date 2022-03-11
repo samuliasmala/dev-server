@@ -46,8 +46,8 @@ echo "pm2
 sequelize-cli
 nodemon" > $NVM_DIR/default-packages
 
-# Install Node 12 and default packages
-nvm install --no-progress 12
+# Install Node 16 and default packages
+nvm install --no-progress 16
 
 # Install Yarn
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
