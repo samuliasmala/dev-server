@@ -85,20 +85,10 @@ sudo apt install -y apt-transport-https ca-certificates
 curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
 # Update and install the Cloud SDK:
 sudo apt update && sudo apt install -y google-cloud-sdk
-# Login to Google account
-gcloud auth login
-# List projects and select one of them
-gcloud projects list
-echo "To select project run
-gcloud config set project PROJECT-ID
-
-To deploy project run
-gcloud app deploy"
 
 # Install Heroku cli
 curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
 heroku --version
-heroku login
 
 # Install Docker-compose
 sudo curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
@@ -145,3 +135,19 @@ sudo -u postgres psql -c "ALTER USER kuura WITH ENCRYPTED PASSWORD 'kuurataan_ku
 echo "localhost:5432:*:kuura:kuurataan_kunnolla" >> ~/.pgpass
 # VTI
 sudo mysql -u root --execute="CREATE DATABASE vti_backend;"
+
+# Print instructions how to login to cli accounts
+echo "Login to Heroku account
+$ heroku login
+
+Login to Google account
+$ gcloud auth login
+
+List projects
+$ gcloud projects list
+
+Select project
+$ gcloud config set project PROJECT-ID
+
+Deploy project
+$ gcloud app deploy"
