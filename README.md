@@ -6,7 +6,8 @@ Bootstrap scripts to quickly set up a new Ubuntu development server (real, WSL o
 
 ### Real Ubuntu
 
-- Put ssh keyfiles and configs to `~/.ssh`
+- Put ssh keyfiles and configs to `~/.ssh` directory: `tar xvf ssh-keys.tar.gz`
+- Clone dev-server repository: `git clone git@github.com:samuliasmala/dev-server.git`
 - Run `bootstrap-ubuntu.sh`
 
 ### WSL2 Ubuntu
@@ -15,16 +16,18 @@ Bootstrap scripts to quickly set up a new Ubuntu development server (real, WSL o
 **[New Windows versions](https://docs.microsoft.com/en-us/windows/wsl/install)**
 1. Open PowerShell as Administrator and run the following command:  
   `wsl --install`  
-  Note: it may be necessary to run `wsl --install -d Ubuntu` instead (might have been necessary because I run first two steps of the old instructions before starting new instructions)
+  Note: it may be necessary to run `wsl --install -d Ubuntu` instead (even though this should be the default option)  
+  Note 2: It's best to use the command line. If Ubuntu is installed from the Microsoft Store then steps 1-5 from Old Windows versions has to be done manually.
 
 1. Install Windows Terminal from Microsoft Store and set following settings:
     - Startup -> Default profile -> Ubuntu
     - Ubuntu -> Starting directory -> `\\wsl$\Ubuntu\home\asmala`
 
-1. Put ssh keyfiles and configs to `~/.ssh`
-1. Run `bootstrap-wsl2.sh`
+1. Put ssh keyfiles and configs to `~/.ssh` directory: `tar xvf ssh-keys.tar.gz`
+1. Clone dev-server repository: `git clone git@github.com:samuliasmala/dev-server.git`
 1. Install Docker [Docker Desktop WSL 2 backend](https://docs.docker.com/docker-for-windows/wsl/)
 1. Add user to Docker group to avoid the use of sudo: `sudo usermod -aG docker $USER`
+1. Install [VcXsrv Windows X Server](https://sourceforge.net/projects/vcxsrv/)
 
 **[Old Windows versions](https://docs.microsoft.com/en-us/windows/wsl/install-manual)**
 
