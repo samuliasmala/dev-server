@@ -21,7 +21,7 @@ Bootstrap scripts to quickly set up a new Ubuntu development server (real, WSL o
 
 1. Install Windows Terminal from Microsoft Store and set following settings:
     - Startup -> Default profile -> Ubuntu
-    - Ubuntu -> Starting directory -> `\\wsl$\Ubuntu\home\asmala`
+    - Ubuntu -> Starting directory -> `~`
 
 1. Put ssh keyfiles and configs to `~/.ssh` directory: `tar xvf ssh-keys.tar.gz`
 1. Clone dev-server repository: `git clone git@github.com:samuliasmala/dev-server.git`
