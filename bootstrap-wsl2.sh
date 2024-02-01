@@ -14,6 +14,11 @@ bash bootstrap-common.sh
 # Restart Postgres to apply config changes
 sudo service postgresql restart
 
+# Add postgres repository
+sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh
+# Install pgvector (match version!)
+sudo apt install postgresql-14-pgvector
+
 # Start services when logging in if not started already
 echo "
 # Start services on login without requiring a password
