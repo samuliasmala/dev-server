@@ -42,12 +42,10 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
 
 # Set Node default global packages which are installed with nvm install
-echo "pm2
-sequelize-cli
-nodemon" > $NVM_DIR/default-packages
+echo "pm2" > $NVM_DIR/default-packages
 
-# Install Node 16 and default packages
-nvm install --no-progress 16
+# Install Node 20 and default packages
+nvm install --no-progress 20
 
 # Install Yarn
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
