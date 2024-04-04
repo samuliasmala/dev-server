@@ -88,10 +88,6 @@ sudo apt update && sudo apt install -y google-cloud-sdk
 curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
 heroku --version
 
-# Install Docker-compose
-sudo curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
-
 # DATABASES
 # Install databases
 sudo apt install -y postgresql postgresql-contrib redis mysql-server
