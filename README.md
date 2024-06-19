@@ -4,11 +4,23 @@ Bootstrap scripts to quickly set up a new Ubuntu development server (real, WSL o
 
 ## Installation instructions
 
+The first thing to do is to clone this repository to get access to scripts:
+```bash
+git clone git@github.com:samuliasmala/dev-server.git
+```
+
 Note: Following error when executing `psql` commands is caused by postgres user not having `x` permission to the working directory. It doesn't affect command result and it's fixed in PostgreSQL 16. For more information see [this answer](https://unix.stackexchange.com/questions/229069/could-not-change-directory-to-home-corey-scripts-permission-denied/773032#773032).
 
 ```
 could not change directory to "/home/asmala": Permission denied
 ```
+
+### Server
+- Run `server/root-bootstrap.sh` as root
+- Run `server/root-add-user.sh` as root if root is the only user
+- Run `server/user-bootsrap.sh` as user
+- Run `server/pmuser-bootstrap.sh` as pm user
+
 
 ### Real Ubuntu
 
