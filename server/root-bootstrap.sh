@@ -9,7 +9,7 @@ apt update
 apt upgrade -y
 
 # Add main packages
-apt install -y apache2 redis postgresql postgresql-contrib build-essential inotify-tools python3-pip python
+apt install -y apache2 redis postgresql postgresql-contrib build-essential inotify-tools python3-pip python3 snapd
 
 # Add misc packages
 apt install -y tldr zip unzip nano screen
@@ -36,7 +36,7 @@ sudo -u postgres psql -c "CREATE DATABASE kuura WITH ENCODING 'UTF8' LC_COLLATE 
 
 # Configure Apache
 echo 'Configure Apache (enable mpm event mode and configure threads etc.)'
-a2dismod php7.2 mpm_prefork
+a2dismod mpm_prefork
 a2enmod mpm_event proxy proxy_http ssl rewrite proxy_wstunnel headers expires
 sed -i '/^\tStartServers.*/i \\tServerLimit \t\t 32' /etc/apache2/mods-enabled/mpm_event.conf
 sed -i 's/^\tThreadLimit.*/\tThreadLimit \t\t 256/' /etc/apache2/mods-enabled/mpm_event.conf
@@ -56,7 +56,9 @@ PG_VERSION=$(psql --version | cut -d' ' -f3 | cut -d. -f1)
 apt install postgresql-$PG_VERSION-pgvector
 
 # Create pm user to run services
+echo "Creating user pm"
 useradd --create-home pm
+echo "Changing password for user pm"
 passwd pm
 mkdir /opt/www
 sudo chown pm:pm /opt/www

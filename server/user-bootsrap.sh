@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd ~
+
 ssh-keygen -t rsa -b 4096
 cat ~/.ssh/id_rsa.pub
 read -n 1 -s -r -p "Press any key to continue when you have added id_rsa.pub to Github"
