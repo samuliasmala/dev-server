@@ -57,8 +57,12 @@ apt install postgresql-$PG_VERSION-pgvector
 
 # Create pm user to run services
 echo "Creating user pm"
-useradd --create-home pm
+useradd --shell /bin/bash --create-home pm
 echo "Changing password for user pm"
 passwd pm
 mkdir /opt/www
 sudo chown pm:pm /opt/www
+
+# Create Postgres database and user
+sudo -u postgres createuser -s pm
+sudo -u postgres psql -c "CREATE DATABASE pm WITH ENCODING 'UTF8' LC_COLLATE = 'fi_FI.UTF-8' LC_CTYPE = 'fi_FI.UTF-8' TEMPLATE template0;"
