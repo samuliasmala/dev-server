@@ -18,8 +18,8 @@ could not change directory to "/home/asmala": Permission denied
 ### Server
 - Run `server/root-bootstrap.sh` as root
 - Run `server/root-add-user.sh` as root if root is the only user
-- Run `server/user-bootsrap.sh` as user
-- Run `server/pmuser-bootstrap.sh` as pm user
+- Run `sudo -u user server/user-bootsrap.sh` as user
+- Run `sudo -u pm server/pmuser-bootstrap.sh` as pm user
 
 
 ### Real Ubuntu
