@@ -16,7 +16,7 @@ sudo apt upgrade -y
 
 # Install dotfiles to customize shell
 git clone git@github.com:samuliasmala/dotfiles.git .dotfiles
-echo 'nnyyyyyyy' | .dotfiles/bootstrap.sh
+echo 'nyyyyyyyyy' | .dotfiles/bootstrap.sh
 
 # Add misc packages
 sudo apt install -y tldr zip unzip build-essential

@@ -7,6 +7,10 @@ ssh-keygen -t rsa -b 4096
 cat ~/.ssh/id_rsa.pub
 read -n 1 -s -r -p "Press any key to continue when you have added id_rsa.pub to Github (not mandatory)"
 
+# Install dotfiles to customize shell
+git clone git@github.com:samuliasmala/dotfiles.git .dotfiles
+echo 'nyyyyyyyyy' | .dotfiles/bootstrap.sh
+
 # Install nvm
 wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 export NVM_DIR="$HOME/.nvm"
@@ -17,3 +21,8 @@ echo "pm2" > $NVM_DIR/default-packages
 
 # Install Node 20 and default packages
 nvm install --no-progress 20
+
+ln -s /opt/www
+
+# Display command to execute to start pm on reboot
+pm2 startup
