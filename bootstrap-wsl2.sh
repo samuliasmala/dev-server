@@ -42,7 +42,10 @@ deflogin off" >> ~/.screenrc
 cat >> ~/.bashrc_local <<"EOF"
 # Add DISPLAY environment variable to tell GUI applications at which IP
 # address the X Server is that we want to use
-export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
+#export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}'):0.0
+# After 14 Jun 2024 resolv.conf has a wrong ip address (at least in Windows 11)
+# https://github.com/microsoft/WSL/issues/11698#issuecomment-2172289497
+export DISPLAY=$(ip route | grep default | awk '{print $3}'):0.0
 
 EOF
 
