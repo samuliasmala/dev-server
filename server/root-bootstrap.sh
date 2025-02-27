@@ -24,6 +24,8 @@ sed -i 's/# set bell-style none/set bell-style none/' /etc/inputrc
 
 # Locale generation has to be done before postgresql installation, or it should be restarted:
 locale-gen fi_FI.UTF-8 en_US.UTF-8
+# New locales are not available in Postgres until it is restarted
+systemctl restart postgresql
 
 # Set max_user_watches higher to avoid "Error: ENOSPC: System limit for number of file watchers reached" when using Gulp
 echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf && sysctl -p
@@ -50,7 +52,7 @@ ln -s /snap/bin/certbot /usr/bin/certbot
 
 # Add pgvector extension
 # Add apt.postgresql.org to sources.list
-/usr/share/postgresql-common/pgdg/apt.postgresql.org.sh
+/usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y
 # Install pgvector (replace 14 with corresponding psql version)
 PG_VERSION=$(psql --version | cut -d' ' -f3 | cut -d. -f1)
 apt install postgresql-$PG_VERSION-pgvector
