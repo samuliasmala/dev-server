@@ -7,6 +7,9 @@ ssh-keygen -t rsa -b 4096
 cat ~/.ssh/id_rsa.pub
 read -n 1 -s -r -p "Press any key to continue when you have added id_rsa.pub to Github (not mandatory)"
 
+# Create authorized_keys file so root can add public key to it
+touch ~/.ssh/authorized_keys
+
 # Install dotfiles to customize shell
 git clone git@github.com:samuliasmala/dotfiles.git .dotfiles
 echo 'nyyyyyyyyy' | .dotfiles/bootstrap.sh
@@ -26,3 +29,5 @@ ln -s /opt/www
 
 # Display command to execute to start pm on reboot
 pm2 startup
+
+echo "Execute above command only after running the script for pm user"
