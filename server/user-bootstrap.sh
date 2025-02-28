@@ -20,7 +20,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
 
 # Set Node default global packages which are installed with nvm install
-echo "pm2" > $NVM_DIR/default-packages
+[ "$(whoami)" = "pm" ] && echo "pm2" > $NVM_DIR/default-packages
 
 # Install Node 20 and default packages
 nvm install --no-progress 20
@@ -28,6 +28,4 @@ nvm install --no-progress 20
 ln -s /opt/www
 
 # Display command to execute to start pm on reboot
-pm2 startup
-
-echo "Execute above command only after running the script for pm user"
+[ "$(whoami)" = "pm" ] && pm2 startup
