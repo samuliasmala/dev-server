@@ -9,18 +9,27 @@ The first thing to do is to clone this repository to get access to scripts:
 git clone https://github.com/samuliasmala/dev-server.git
 ```
 
-Note: Following error when executing `psql` commands is caused by postgres user not having `x` permission to the working directory. It doesn't affect command result and it's fixed in PostgreSQL 16. For more information see [this answer](https://unix.stackexchange.com/questions/229069/could-not-change-directory-to-home-corey-scripts-permission-denied/773032#773032).
+Note: Following error when executing `psql` commands is caused by postgres user not having `x` permission to the working directory. It doesn't affect command result and it's fixed in PostgreSQL 16 (included in Ubuntu 24.04). For more information see [this answer](https://unix.stackexchange.com/questions/229069/could-not-change-directory-to-home-corey-scripts-permission-denied/773032#773032).
 
 ```
 could not change directory to "/home/asmala": Permission denied
 ```
 
 ### Server
-- Run `server/root-bootstrap.sh` as root
-- Run `server/root-add-user.sh` as root if root is the only user
-- Run `sudo -u user server/user-bootsrap.sh` as user
-- Run `sudo -u pm server/pmuser-bootstrap.sh` as pm user
+Run following commands as root from dev-server directory, e.g., `/root/dev-server`
 
+```bash
+# Install packages and add pm user
+./server/root-bootstrap.sh
+# Add regular user (samuli)
+./server/root-add-user.sh
+# Bootstrap regular and pm users
+sudo -u samuli server/user-bootstrap.sh
+sudo -u pm server/user-bootstrap.sh
+# Add public key for ssh access
+cat server/id_rsa.pub >> $(sudo -u samuli bash -c 'echo $HOME')/.ssh/authorized_keys
+cat server/id_rsa.pub >> $(sudo -u pm bash -c 'echo $HOME')/.ssh/authorized_keys
+```
 
 ### Real Ubuntu
 
