@@ -29,6 +29,8 @@ sudo -u pm server/user-bootstrap.sh
 # Add public key for ssh access
 cat server/id_rsa.pub >> $(sudo -u samuli bash -c 'echo $HOME')/.ssh/authorized_keys
 cat server/id_rsa.pub >> $(sudo -u pm bash -c 'echo $HOME')/.ssh/authorized_keys
+# Change Postgres password for kuura
+sudo -u postgres psql -c "ALTER USER kuura WITH ENCRYPTED PASSWORD 'new_password';"
 ```
 
 ### Real Ubuntu
