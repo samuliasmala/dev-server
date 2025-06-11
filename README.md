@@ -31,7 +31,14 @@ cat server/id_rsa.pub >> $(sudo -u samuli bash -c 'echo $HOME')/.ssh/authorized_
 cat server/id_rsa.pub >> $(sudo -u pm bash -c 'echo $HOME')/.ssh/authorized_keys
 # Change Postgres password for kuura
 sudo -u postgres psql -c "ALTER USER kuura WITH ENCRYPTED PASSWORD 'new_password';"
+# Disable ssh login using password
+sudoedit /etc/ssh/sshd_config 
+# Uncomment/add "PasswordAuthentication no" row
+sudo systemctl reload sshd
 ```
+
+Then do following steps (should be added to script at some point)
+- Add `admin` user (gets automatically sudo rights from admin group)
 
 ### Real Ubuntu
 
