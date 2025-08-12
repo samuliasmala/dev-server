@@ -1,0 +1,16 @@
+# Test: sudo logrotate -d /etc/logrotate.d/pm2
+# Force once: sudo logrotate -f /etc/logrotate.d/pm2
+/home/pm/app1/backend/out.log
+/home/pm/app2/backend/out.log
+{
+  su pm pm
+  daily
+  minsize 10M
+  rotate 30
+  maxage 365
+  compress
+  delaycompress
+  copytruncate
+  missingok
+  notifempty
+}

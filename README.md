@@ -39,6 +39,9 @@ sudo systemctl reload sshd
 
 Then do following steps (should be added to script at some point)
 - Add `admin` user (gets automatically sudo rights from admin group)
+- Add `admin` user to `adm` group so Apache logs can be accessed
+- Add log rotation config to `/etc/logrotate.d/pm2` (example in `configs/logrotate`)
+
 
 ### Real Ubuntu
 
