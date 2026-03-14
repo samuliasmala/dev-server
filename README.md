@@ -1,6 +1,6 @@
 # dev-server
 
-Bootstrap scripts to quickly set up a new Ubuntu development server (real, WSL or Vagrant + Virtualbox)
+Bootstrap scripts to quickly set up a new Ubuntu development server.
 
 ## Installation instructions
 
@@ -107,8 +107,3 @@ Then do following steps (should be added to script at some point)
 1. Install Docker [Docker Desktop WSL 2 backend](https://docs.docker.com/docker-for-windows/wsl/)
 1. Add user to Docker group to avoid the use of sudo: `sudo usermod -aG docker $USER`
 1. Load VS Code settings: Install _Settings Sync (shan.code-settings-sync)_, login with Github account, select correct Gist and download settings.
-
-### Vagrant + Virtualbox
-
-- Install `vagrant-disksize` plugin
-- Run `vagrant up`

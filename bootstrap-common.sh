@@ -102,12 +102,6 @@ sudo -u postgres psql -c "CREATE DATABASE $USER WITH ENCODING 'UTF8';"
 sudo -u postgres psql -c "ALTER USER $USER WITH ENCRYPTED PASSWORD 'pswd';"
 # Enable passwordless access
 echo "localhost:5432:*:$USER:pswd" > ~/.pgpass && chmod 0600 ~/.pgpass
-# Configure postgres to allow connections from Vagrant host
-sudo sed -i "s/#listen_address.*/listen_addresses = '*'/" $(find /etc/postgresql -name postgresql.conf)
-sudo tee -a  $(find /etc/postgresql -name pg_hba.conf) <<EOF
-# Accept all IPv4 connections from Vagrant host (10.0.2.2)
-host    all             all             10.0.2.2/32             md5
-EOF
 
 # Configure MySQL
 sudo mysql -u root --execute="CREATE USER '$USER'@'localhost' IDENTIFIED BY 'pswd';"
