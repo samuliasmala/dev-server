@@ -1,25 +1,36 @@
 #!/bin/bash
 
 # Check that .ssh folder exists
-if [ ! -e $HOME/.ssh/id_rsa ]; then
-    echo "Restore .ssh folder (id_rsa, id_rsa.pub and config files)"
-    echo "To continue, $HOME/.ssh/id_rsa must exist"
+if [ ! -e $HOME/.ssh/id_ed25519 ]; then
+    echo "SSH key not found from $HOME/.ssh/id_ed25519. Please create SSH key pair and add the public key to Github before running this script."
+    echo "ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519 -C \"$USER@$HOSTNAME\""
     exit 1
 fi
 
 # Move to home directory, required at least to install dotfiles
 cd
 
+# Install dotfiles to customize shell
+git clone git@github.com:samuliasmala/dotfiles.git dotfiles
+echo 'nyyyyyyyyy' | ./dotfiles/bootstrap.sh
+
 # Upgrade system
 sudo apt update
 sudo apt upgrade -y
 
-# Install dotfiles to customize shell
-git clone git@github.com:samuliasmala/dotfiles.git .dotfiles
-echo 'nyyyyyyyyy' | .dotfiles/bootstrap.sh
+# Disable root login and password authentication for better security.
+sudo sed -i 's/^#\?PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config
+sudo sed -i 's/^#\?PasswordAuthentication.*/PasswordAuthentication no/' /etc/ssh/sshd_config
+systemctl reload sshd
 
 # Add misc packages
-sudo apt install -y tldr zip unzip build-essential
+sudo apt install -y tldr zip unzip build-essential ufw tmux
+
+# Configure firewall
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow 22/tcp
+sudo yes | sudo ufw enable
 
 # Set timezone to Helsinki
 echo "Europe/Helsinki" | sudo tee /etc/timezone
@@ -37,65 +48,27 @@ sudo locale-gen fi_FI.UTF-8 en_US.UTF-8
 echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
 # Install nvm
-wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
 
 # Set Node default global packages which are installed with nvm install
 echo "pm2" > $NVM_DIR/default-packages
 
-# Install Node 20 and default packages
-nvm install --no-progress 20
-
-# Install Yarn
-curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-sudo apt update && sudo apt install --no-install-recommends yarn
-
-# Install Conda
-wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh
-bash ~/miniconda.sh -b -p $HOME/.miniconda3
-rm ~/miniconda.sh
-# The installer will not prompt you for anything, including setup of your shell to activate conda. To add this activation in your current shell session:
-eval "$($HOME/.miniconda3/bin/conda shell.bash hook)"
-# With this activated shell, you can then install conda’s shell functions for easier access in the future:
-conda init
-# If you’d prefer that conda’s base environment not be activated on startup, set the auto_activate_base parameter to false:
-conda config --set auto_activate_base false
-# Add conda-forge - a community effort that provides conda packages for a wide range of software
-conda config --add channels conda-forge
-conda config --set channel_priority strict
+# Install Node 24 and default packages
+nvm install --no-progress 24
 
 # Use Python3 as default Python
 sudo ln -s /usr/bin/python3 /usr/bin/python
 
-# Install Pypy (faster Python interpreter)
-sudo add-apt-repository -y ppa:pypy/ppa
-sudo apt install -y pypy3
-
-
-# Install Google Cloud SDK
-# Add the Cloud SDK distribution URI as a package source:
-echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-# Make sure you have apt-transport-https installed:
-sudo apt install -y apt-transport-https ca-certificates
-# Import the Google Cloud public key:
-curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
-# Update and install the Cloud SDK:
-sudo apt update && sudo apt install -y google-cloud-sdk
-
-# Install Heroku cli
-curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
-heroku --version
-
 # DATABASES
 # Install databases
-sudo apt install -y postgresql postgresql-contrib redis mysql-server
+sudo apt install -y postgresql-16 postgresql-contrib-16 postgresql-16-pgvector redis mysql-server
 # Databases not started automatically after install in WSL
 sudo service postgresql start
 sudo service mysql start
 
-# Cofigure Postgresql
+# Configure Postgresql
 # Create Postgres database and user
 sudo -u postgres createuser -s $USER
 sudo -u postgres psql -c "CREATE DATABASE $USER WITH ENCODING 'UTF8';"
@@ -121,21 +94,26 @@ echo "Run '. .bashrc' to source .bashrc and enable nvm, node and npm. Alternativ
 sudo -u postgres createuser -s kuura
 sudo -u postgres psql -c "ALTER USER kuura WITH ENCRYPTED PASSWORD 'kuurataan_kunnolla';"
 echo "localhost:5432:*:kuura:kuurataan_kunnolla" >> ~/.pgpass
-# VTI
-sudo mysql -u root --execute="CREATE DATABASE vti_backend;"
 
-# Print instructions how to login to cli accounts
-echo "Login to Heroku account
-$ heroku login
+# Restart Postgres to apply config changes
+sudo service postgresql restart
 
-Login to Google account
-$ gcloud auth login
+# Install Docker
+curl https://get.docker.com | bash
+sudo usermod -aG docker $USER
+# Install Docker completions (bash-completion package is required)
+mkdir -p ~/.local/share/bash-completion/completions
+docker completion bash > ~/.local/share/bash-completion/completions/docker
 
-List projects
-$ gcloud projects list
+# Install GitHub CLI
+sudo mkdir -p -m 755 /etc/apt/keyrings \
+	&& out=$(mktemp) && wget -nv -O$out https://cli.github.com/packages/githubcli-archive-keyring.gpg \
+	&& cat $out | sudo tee /etc/apt/keyrings/githubcli-archive-keyring.gpg > /dev/null \
+	&& sudo chmod go+r /etc/apt/keyrings/githubcli-archive-keyring.gpg \
+	&& sudo mkdir -p -m 755 /etc/apt/sources.list.d \
+	&& echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+	&& sudo apt update \
+	&& sudo apt install gh -y
 
-Select project
-$ gcloud config set project PROJECT-ID
-
-Deploy project
-$ gcloud app deploy"
+# Install Claude Code
+curl -fsSL https://claude.ai/install.sh | bash
