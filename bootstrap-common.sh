@@ -12,7 +12,10 @@ cd
 
 # Install dotfiles to customize shell
 git clone git@github.com:samuliasmala/dotfiles.git dotfiles
-echo 'nyyyyyyyyy' | ./dotfiles/bootstrap.sh
+echo 'nyyyyyyyyyy' | ./dotfiles/bootstrap.sh
+
+# Source .profile to set ~/.local/bin in PATH
+source ~/.profile
 
 # Upgrade system
 sudo apt update
@@ -21,7 +24,7 @@ sudo apt upgrade -y
 # Disable root login and password authentication for better security.
 sudo sed -i 's/^#\?PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config
 sudo sed -i 's/^#\?PasswordAuthentication.*/PasswordAuthentication no/' /etc/ssh/sshd_config
-systemctl reload sshd
+sudo systemctl restart ssh
 
 # Add misc packages
 sudo apt install -y tldr zip unzip build-essential ufw tmux
@@ -86,9 +89,6 @@ echo "[client]
 user = $USER
 password = pswd" > ~/.my.cnf && chmod 0600 ~/.my.cnf
 
-# Print instructions
-echo "Run '. .bashrc' to source .bashrc and enable nvm, node and npm. Alternatively start new shell session"
-
 # APP SPECIFIC SETTINGS
 # Kuura
 sudo -u postgres createuser -s kuura
@@ -117,3 +117,10 @@ sudo mkdir -p -m 755 /etc/apt/keyrings \
 
 # Install Claude Code
 curl -fsSL https://claude.ai/install.sh | bash
+
+# Print instructions
+echo "Run '. .profile' to source .profile (which sources .bashrc etc.) to enable nvm, node and npm. Alternatively start new shell session"
+echo "Next:
+- Login to GitHub CLI: gh auth login
+- Login to Docker: docker login
+- Login to Claude Code: claude login
