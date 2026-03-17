@@ -7,6 +7,14 @@ if [ ! -e $HOME/.ssh/id_ed25519 ]; then
     exit 1
 fi
 
+# Check that git connection works
+ssh -T git@github.com 2>&1 | grep -q "successfully authenticated"
+if [ $? -ne 0 ]; then
+    echo "GitHub SSH connection failed. Please add your public key to GitHub before running this script:"
+    echo "https://github.com/settings/keys"
+    exit 1
+fi
+
 # Move to home directory, required at least to install dotfiles
 cd
 
