@@ -35,12 +35,15 @@ sudo sed -i 's/^#\?PasswordAuthentication.*/PasswordAuthentication no/' /etc/ssh
 sudo systemctl restart ssh
 
 # Add misc packages
-sudo apt install -y tldr zip unzip build-essential ufw tmux
+sudo apt install -y tldr zip unzip build-essential ufw tmux mosh
 
 # Configure firewall
 sudo ufw default deny incoming
 sudo ufw default allow outgoing
+# Allow SSH
 sudo ufw allow 22/tcp
+# Allow Mosh
+sudo ufw allow 60000:61000/udp
 sudo yes | sudo ufw enable
 
 # Set timezone to Helsinki
