@@ -25,6 +25,9 @@ bash bootstrap-common.sh
 # Authenticate GitHub CLI using the PAT
 gh auth login --with-token < ~/.config/github.pat
 
+# Set GitHub CLI to use SSH when cloning repositories
+gh config set git_protocol ssh --host github.com
+
 cat >> ~/.bashrc_local <<"EOF"
 # Override Git author and committer in .gitconfig
 export GIT_AUTHOR_NAME="Samuli's Claude"
