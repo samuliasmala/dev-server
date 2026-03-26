@@ -35,7 +35,7 @@ sudo sed -i 's/^#\?PasswordAuthentication.*/PasswordAuthentication no/' /etc/ssh
 sudo systemctl restart ssh
 
 # Add misc packages
-sudo apt install -y tldr zip unzip build-essential ufw tmux mosh
+sudo apt install -y tldr zip unzip build-essential ufw tmux mosh net-tools
 
 # Configure firewall
 sudo ufw default deny incoming
