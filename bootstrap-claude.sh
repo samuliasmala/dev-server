@@ -28,6 +28,17 @@ gh auth login --with-token < ~/.config/github.pat
 # Set GitHub CLI to use SSH when cloning repositories
 gh config set git_protocol ssh --host github.com
 
+# Add 8 GB swap file to avoid out of memory errors when running multiple applications
+sudo fallocate -l 8G /swapfile
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+grep -q '^/swapfile ' /etc/fstab || echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+
+# Set swappiness to 10 to reduce swap usage and improve performance
+sudo sysctl vm.swappiness=10
+echo 'vm.swappiness=10' | sudo tee /etc/sysctl.d/99-swappiness.conf
+
 cat >> ~/.bashrc_local <<"EOF"
 # Override Git author and committer in .gitconfig
 export GIT_AUTHOR_NAME="Samuli's Claude"
