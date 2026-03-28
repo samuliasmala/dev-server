@@ -35,7 +35,7 @@ sudo sed -i 's/^#\?PasswordAuthentication.*/PasswordAuthentication no/' /etc/ssh
 sudo systemctl restart ssh
 
 # Add misc packages
-sudo apt install -y tldr zip unzip build-essential ufw tmux mosh net-tools
+sudo apt install -y tldr zip unzip build-essential ufw tmux mosh net-tools fzf
 
 # Configure firewall
 sudo ufw default deny incoming
@@ -128,6 +128,9 @@ sudo mkdir -p -m 755 /etc/apt/keyrings \
 
 # Install Claude Code
 curl -fsSL https://claude.ai/install.sh | bash
+
+# Install Oh my tmux
+curl -fsSL "https://github.com/gpakosz/.tmux/raw/refs/heads/master/install.sh#$(date +%s)" | bash
 
 # Print instructions
 echo "Run '. .profile' to source .profile (which sources .bashrc etc.) to enable nvm, node and npm. Alternatively start new shell session"
