@@ -35,7 +35,7 @@ sudo sed -i 's/^#\?PasswordAuthentication.*/PasswordAuthentication no/' /etc/ssh
 sudo systemctl restart ssh
 
 # Add misc packages
-sudo apt install -y tldr zip unzip build-essential ufw tmux mosh net-tools fzf
+sudo apt install -y tldr zip unzip build-essential ufw tmux mosh net-tools fzf jq
 
 # Configure firewall
 sudo ufw default deny incoming
@@ -137,4 +137,4 @@ echo "Run '. .profile' to source .profile (which sources .bashrc etc.) to enable
 echo "Next:
 - Login to GitHub CLI: gh auth login
 - Login to Docker: docker login
-- Login to Claude Code: claude login
+- Login to Claude Code: claude login"

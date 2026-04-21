@@ -7,7 +7,7 @@ if [ ! -f ~/.config/github.pat ]; then
   echo "To create a GitHub fine-grained personal access token:"
   echo "  1. Go to https://github.com/settings/tokens?type=beta"
   echo "  2. Click 'Generate new token'"
-  echo "  3. Set a name and expiration"
+  echo "  3. Set a name, resource owner (kuura-health organization) and expiration"
   echo "  4. Repository access: select 'All repositories' (or specific ones if preferred)"
   echo "  5. Under 'Repository permissions', enable:"
   echo "     - Contents: Read and write"
