@@ -1,12 +1,15 @@
 #!/bin/bash
 # Script to add a user to a claude-type server
 
-if [ $# -ne 1 ]; then
-  echo "Usage: $0 <username>"
+if [ $# -ne 4 ]; then
+  echo "Usage: $0 <username> <git-name> <git-email> <dotfiles-path>"
   exit 1
 fi
 
 USERNAME=$1
+GIT_NAME=$2
+GIT_EMAIL=$3
+DOTFILES=$(realpath "$4")
 
 # Helper function to run commands as the new user
 run_as_user() {
@@ -17,6 +20,12 @@ run_as_user() {
 sudo useradd --shell /bin/bash --create-home "$USERNAME"
 sudo usermod -aG sudo "$USERNAME"
 sudo usermod -aG docker "$USERNAME"
+
+# Install Oh my tmux (must be before dotfiles since it requires it))
+run_as_user bash -c "curl -fsSL 'https://github.com/gpakosz/.tmux/raw/refs/heads/master/install.sh#$(date +%s)' | bash"
+
+# Install dotfiles for the new user
+run_as_user bash -c "cd '$DOTFILES' && ./install --all"
 
 # Create Postgres database and user
 sudo -u postgres createuser -s "$USERNAME"
@@ -50,7 +59,14 @@ run_as_user bash -c "curl -fsSL https://claude.ai/install.sh | bash"
 # Install nvm
 run_as_user bash -c "wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash"
 
-# Write TODO.md with GitHub PAT setup instructions for the new user
+# Append user section to .gitconfig
+sudo -u "$USERNAME" tee -a "/home/$USERNAME/.gitconfig" > /dev/null <<EOF
+[user]
+  name  = $GIT_NAME
+  email = $GIT_EMAIL
+EOF
+
+# Write TODO.md with instructions for the new user
 sudo -u "$USERNAME" tee "/home/$USERNAME/TODO.md" > /dev/null <<"EOF"
 # TODO
 
