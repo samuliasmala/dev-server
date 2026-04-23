@@ -25,8 +25,12 @@ sudo usermod -aG docker "$USERNAME"
 run_as_user mkdir -p /home/$USERNAME/.config
 
 # Install Oh my tmux (must be before dotfiles since it requires it))
-# Download to temp file (not piped) so the installer skips its "review?" prompt.
-run_as_user bash -c 'tmp=$(mktemp) && curl -fsSL "https://github.com/gpakosz/.tmux/raw/refs/heads/master/install.sh#$(date +%s)" -o "$tmp" && bash "$tmp"; rm -f "$tmp"'
+# Download to a file (not piped) so the installer skips its "review?" prompt.
+TMUX_INSTALLER=/tmp/oh-my-tmux-install.sh
+curl -fsSL "https://github.com/gpakosz/.tmux/raw/refs/heads/master/install.sh" -o "$TMUX_INSTALLER"
+chmod 0644 "$TMUX_INSTALLER"
+run_as_user bash "$TMUX_INSTALLER"
+rm -f "$TMUX_INSTALLER"
 
 # Install dotfiles for the new user
 run_as_user bash -c "cd '$DOTFILES' && ./install.sh --all"
