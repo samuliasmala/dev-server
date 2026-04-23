@@ -22,10 +22,11 @@ sudo usermod -aG sudo "$USERNAME"
 sudo usermod -aG docker "$USERNAME"
 
 # Install Oh my tmux (must be before dotfiles since it requires it))
-run_as_user bash -c "curl -fsSL 'https://github.com/gpakosz/.tmux/raw/refs/heads/master/install.sh#$(date +%s)' | bash"
+# Download to temp file (not piped) so the installer skips its "review?" prompt.
+run_as_user bash -c 'tmp=$(mktemp) && curl -fsSL "https://github.com/gpakosz/.tmux/raw/refs/heads/master/install.sh#$(date +%s)" -o "$tmp" && bash "$tmp"; rm -f "$tmp"'
 
 # Install dotfiles for the new user
-run_as_user bash -c "cd '$DOTFILES' && ./install --all"
+run_as_user bash -c "cd '$DOTFILES' && ./install.sh --all"
 
 # Create Postgres database and user
 sudo -u postgres createuser -s "$USERNAME"
@@ -48,7 +49,7 @@ EOF
 chmod 0600 ~/.my.cnf"
 
 # Generate SSH key pair for the new user
-run_as_user ssh-keygen -t ed25519 -C "$USERNAME@$(hostname)" -f "/home/$USERNAME/.ssh/id_ed25519" -N ""
+run_as_user bash -c "ssh-keygen -t ed25519 -C '$USERNAME@$(hostname)' -f '/home/$USERNAME/.ssh/id_ed25519' -N ''"
 
 # Set GitHub CLI to use SSH when cloning repositories
 run_as_user gh config set git_protocol ssh --host github.com
