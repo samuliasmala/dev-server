@@ -21,6 +21,9 @@ sudo useradd --shell /bin/bash --create-home "$USERNAME"
 sudo usermod -aG sudo "$USERNAME"
 sudo usermod -aG docker "$USERNAME"
 
+# Create .config directory for the new user so Oh my tmux installer can use it
+run_as_user mkdir -p /home/$USERNAME/.config
+
 # Install Oh my tmux (must be before dotfiles since it requires it))
 # Download to temp file (not piped) so the installer skips its "review?" prompt.
 run_as_user bash -c 'tmp=$(mktemp) && curl -fsSL "https://github.com/gpakosz/.tmux/raw/refs/heads/master/install.sh#$(date +%s)" -o "$tmp" && bash "$tmp"; rm -f "$tmp"'
