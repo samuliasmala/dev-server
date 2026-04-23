@@ -8,6 +8,11 @@ fi
 
 USERNAME=$1
 
+# Helper function to run commands as the new user
+run_as_user() {
+  sudo -iu "$USERNAME" "$@"
+}
+
 # Create Linux user with bash shell (password left unset)
 sudo useradd --shell /bin/bash --create-home "$USERNAME"
 sudo usermod -aG sudo "$USERNAME"
@@ -34,16 +39,16 @@ EOF
 chmod 0600 ~/.my.cnf"
 
 # Generate SSH key pair for the new user
-sudo -u "$USERNAME" ssh-keygen -t ed25519 -C "$USERNAME@$(hostname)" -f "/home/$USERNAME/.ssh/id_ed25519" -N ""
+run_as_user ssh-keygen -t ed25519 -C "$USERNAME@$(hostname)" -f "/home/$USERNAME/.ssh/id_ed25519" -N ""
 
 # Set GitHub CLI to use SSH when cloning repositories
-sudo -iu "$USERNAME" bash -c "gh config set git_protocol ssh --host github.com"
+run_as_user gh config set git_protocol ssh --host github.com
 
 # Install Claude Code for the new user
-sudo -iu "$USERNAME" bash -c "curl -fsSL https://claude.ai/install.sh | bash"
+run_as_user bash -c "curl -fsSL https://claude.ai/install.sh | bash"
 
 # Install nvm
-sudo -iu "$USERNAME" bash -c "wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash"
+run_as_user bash -c "wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash"
 
 # Write TODO.md with GitHub PAT setup instructions for the new user
 sudo -u "$USERNAME" tee "/home/$USERNAME/TODO.md" > /dev/null <<"EOF"
