@@ -22,6 +22,9 @@ fi
 
 bash bootstrap-common.sh
 
+# Proactively handle out-of-memory situations
+sudo apt-get install systemd-oomd
+
 # Authenticate GitHub CLI using the PAT
 gh auth login --with-token < ~/.config/github.pat
 
