@@ -72,6 +72,16 @@ echo "pm2" > $NVM_DIR/default-packages
 # Install Node 24 and default packages
 nvm install --no-progress 24
 
+# Install pnpm and add completions
+corepack add pnpm -g
+mkdir -p ~/.local/scripts/
+pnpm completion bash > ~/.local/scripts/completion-for-pnpm.bash
+echo "
+# pnpm autocomplete
+source ~/.local/scripts/completion-for-pnpm.bash
+# pnpm autocomplete for pn alias
+complete -o default -F _pnpm_completion pn" >> ~/.bashrc
+
 # Use Python3 as default Python
 sudo ln -s /usr/bin/python3 /usr/bin/python
 
