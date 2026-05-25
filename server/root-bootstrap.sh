@@ -12,7 +12,13 @@ apt upgrade -y
 apt install -y apache2 redis postgresql postgresql-contrib build-essential inotify-tools python3-pip python3 snapd
 
 # Add misc packages
-apt install -y tldr zip unzip nano screen
+apt install -y zip unzip nano screen
+
+# Install tealdeer (tldr client) from upstream binary release.
+# Ubuntu's tldr-hs and tealdeer 1.6 hardcode a dead archive URL; 1.8+ uses the working one.
+TEALDEER_VERSION=v1.8.1
+curl -fsSL -o /usr/local/bin/tldr "https://github.com/tealdeer-rs/tealdeer/releases/download/${TEALDEER_VERSION}/tealdeer-linux-x86_64-musl"
+chmod +x /usr/local/bin/tldr
 
 # Set timezone to Helsinki
 echo "Europe/Helsinki" | tee /etc/timezone

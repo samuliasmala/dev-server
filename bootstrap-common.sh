@@ -35,7 +35,14 @@ sudo sed -i 's/^#\?PasswordAuthentication.*/PasswordAuthentication no/' /etc/ssh
 sudo systemctl restart ssh
 
 # Add misc packages
-sudo apt install -y tldr zip unzip build-essential ufw tmux mosh net-tools fzf jq
+sudo apt install -y zip unzip build-essential ufw tmux mosh net-tools fzf jq
+
+# Install tealdeer (tldr client) from upstream binary release.
+# Ubuntu's tldr-hs and tealdeer 1.6 hardcode a dead archive URL; 1.8+ uses the working one.
+TEALDEER_VERSION=v1.8.1
+mkdir -p ~/.local/bin
+curl -fsSL -o ~/.local/bin/tldr "https://github.com/tealdeer-rs/tealdeer/releases/download/${TEALDEER_VERSION}/tealdeer-linux-x86_64-musl"
+chmod +x ~/.local/bin/tldr
 
 # Configure firewall
 sudo ufw default deny incoming
