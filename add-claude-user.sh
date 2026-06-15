@@ -9,7 +9,12 @@ fi
 USERNAME=$1
 GIT_NAME=$2
 GIT_EMAIL=$3
-DOTFILES=$(realpath "$4")
+DOTFILES_SRC=$(realpath "$4")
+
+# Shared, root-owned location the dotfiles are installed from. Using a shared
+# spot (instead of the invoking user's home) means the symlinks/include lines
+# created by install.sh point at a path every user can read.
+DOTFILES=/usr/local/share/dotfiles
 
 # Helper function to run commands as the new user
 run_as_user() {
@@ -31,6 +36,17 @@ curl -fsSL "https://github.com/gpakosz/.tmux/raw/refs/heads/master/install.sh" -
 chmod 0644 "$TMUX_INSTALLER"
 run_as_user bash "$TMUX_INSTALLER"
 rm -f "$TMUX_INSTALLER"
+
+# Copy dotfiles to the shared location (skip if already populated by an earlier
+# run for another user). Owned by root, world-readable, so every user can read
+# the files install.sh symlinks/sources but none can modify the shared copy.
+if [ -d "$DOTFILES" ]; then
+  echo "Shared dotfiles already present at $DOTFILES; reusing."
+else
+  sudo cp -a "$DOTFILES_SRC" "$DOTFILES"
+  sudo chown -R root:root "$DOTFILES"
+  sudo chmod -R a+rX "$DOTFILES"
+fi
 
 # Install dotfiles for the new user
 run_as_user bash -c "cd '$DOTFILES' && ./install.sh --all"
