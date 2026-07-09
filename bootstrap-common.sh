@@ -79,8 +79,11 @@ echo "pm2" > $NVM_DIR/default-packages
 # Install Node 24 and default packages
 nvm install --no-progress 24
 
-# Install pnpm and add completions
-corepack add pnpm -g
+# Install pnpm and add completions.
+# `install -g` pins/pre-downloads pnpm as the global default; `enable` creates the
+# `pnpm` shim on PATH (install -g alone does NOT, so pnpm would be "command not found").
+corepack install -g pnpm@latest
+corepack enable pnpm
 mkdir -p ~/.local/scripts/
 pnpm completion bash > ~/.local/scripts/completion-for-pnpm.bash
 echo "
